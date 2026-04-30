@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OS Algorithm Solver</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="logo">
+      <span class="logo-icon">⚙</span>
+      <div>
+        <div class="logo-title">OS Algorithm Solver</div>
+        <div class="logo-sub">Auto-selects &amp; explains the best algorithm</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN ── -->
+  <main>
+
+    <!-- Step 1: Choose problem type -->
+    <section class="card" id="step1">
+      <div class="step-label">Step 1</div>
+      <h2>Choose Problem Type</h2>
+      <div class="type-grid">
+        <button class="type-btn" onclick="selectType('cpu')" id="btn-cpu">
+          <span class="type-icon">🖥</span>
+          <strong>CPU Scheduling</strong>
+          <small>FCFS · SJF · Round Robin</small>
+        </button>
+        <button class="type-btn" onclick="selectType('memory')" id="btn-memory">
+          <span class="type-icon">💾</span>
+          <strong>Memory Management</strong>
+          <small>FIFO · LRU · Optimal</small>
+        </button>
+        <button class="type-btn" onclick="selectType('disk')" id="btn-disk">
+          <span class="type-icon">💿</span>
+          <strong>Disk Scheduling</strong>
+          <small>FCFS · SSTF · SCAN</small>
+        </button>
+      </div>
+    </section>
+
+    <!-- Step 2: Input form (shown after type selection) -->
+    <section class="card hidden" id="step2">
+      <div class="step-label">Step 2</div>
+      <h2>Enter Your Data</h2>
+
+      <!-- ── CPU FORM ── -->
+      <div id="form-cpu" class="subform hidden">
+        <p class="hint">Add each process with its arrival and burst time.</p>
+        <div id="cpu-rows">
+          <div class="process-row" data-idx="0">
+            <span class="pid-label">P1</span>
+            <label>Arrival<input type="number" class="arr" min="0" value="0"/></label>
+            <label>Burst<input type="number" class="bst" min="1" value="5"/></label>
+            <button class="remove-btn" onclick="removeRow(this)">✕</button>
+          </div>
+        </div>
+        <div class="row-actions">
+          <button class="btn-secondary" onclick="addRow()">+ Add Process</button>
+        </div>
+        <label class="quantum-label">
+          Time Quantum <small>(leave 0 if not using Round Robin)</small>
+          <input type="number" id="quantum" min="0" value="0" style="width:80px"/>
+        </label>
+      </div>
+
+      <!-- ── MEMORY FORM ── -->
+      <div id="form-memory" class="subform hidden">
+        <p class="hint">Enter the page reference string (space-separated numbers) and the number of frames.</p>
+        <label>
+          Page Reference String
+          <input type="text" id="pages" placeholder="e.g. 7 0 1 2 0 3 0 4 2 3 0 3 2" value="7 0 1 2 0 3 0 4 2 3 0 3 2"/>
+        </label>
+        <label>
+          Number of Frames
+          <input type="number" id="frames" min="1" max="10" value="3"/>
+        </label>
+      </div>
+
+      <!-- ── DISK FORM ── -->
+      <div id="form-disk" class="subform hidden">
+        <p class="hint">Enter disk request positions (space-separated) and the initial head position.</p>
+        <label>
+          Request Queue
+          <input type="text" id="requests" placeholder="e.g. 98 183 37 122 14 124 65 67" value="98 183 37 122 14 124 65 67"/>
+        </label>
+        <label>
+          Initial Head Position
+          <input type="number" id="head" min="0" value="53"/>
+        </label>
+      </div>
+
+      <button class="btn-primary" onclick="solve()">⚡ Solve</button>
+    </section>
+
+    <!-- Step 3: Output -->
+    <section class="card hidden" id="step3">
+      <div class="step-label">Step 3</div>
+      <h2>Result</h2>
+      <div id="output"></div>
+    </section>
+
+  </main>
+
+  <footer>Built for learning · No AI used for computation · Pure rule-based logic</footer>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
